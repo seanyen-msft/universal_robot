@@ -72,7 +72,9 @@
 
 /* Author: Sachin Chitta, David Lu!!, Ugo Cupcic */
 
-#include <class_loader/class_loader.h>
+#define _USE_MATH_DEFINES
+
+#include <class_loader/class_loader.hpp>
 
 //#include <tf/transform_datatypes.h>
 #include <tf_conversions/tf_kdl.h>
@@ -124,9 +126,9 @@ void URKinematicsPlugin::getRandomConfiguration(const KDL::JntArray &seed_state,
                                                  bool lock_redundancy) const
 {
   std::vector<double> values(dimension_, 0.0);
-  std::vector<double> near(dimension_, 0.0);
+  std::vector<double> _near(dimension_, 0.0);
   for (std::size_t i = 0 ; i < dimension_; ++i)
-    near[i] = seed_state(i);
+    _near[i] = seed_state(i);
 
   // Need to resize the consistency limits to remove mimic joints
   std::vector<double> consistency_limits_mimic;
@@ -137,7 +139,7 @@ void URKinematicsPlugin::getRandomConfiguration(const KDL::JntArray &seed_state,
     consistency_limits_mimic.push_back(consistency_limits[i]);
   }
 
-  joint_model_group_->getVariableRandomPositionsNearBy(state_->getRandomNumberGenerator(), values, near, consistency_limits_mimic);
+  joint_model_group_->getVariableRandomPositionsNearBy(state_->getRandomNumberGenerator(), values, _near, consistency_limits_mimic);
   
   for (std::size_t i = 0; i < dimension_; ++i)
   {

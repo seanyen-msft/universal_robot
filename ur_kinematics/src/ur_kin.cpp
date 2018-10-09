@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include <ur_kinematics/ur_kin.h>
 
 #include <math.h>
